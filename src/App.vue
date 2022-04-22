@@ -2,35 +2,37 @@
   <div>
     <!-- <the-header></the-header> -->
     <TheHeader />
-    <BadgeList />
-    <UserInfo
-      :full-name="activeUser.name"
-      :info-text="activeUser.description"
-      :role="activeUser.role"
-    />
-    <course-goal #default="slotProps">
-      <h2>{{ slotProps.item }}</h2>
-      <p>{{ slotProps['another'] }}</p>
-    </course-goal>
+    <button @click="setSelectedComponent('active-goals')">Active Goals</button>
+    <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
+    <!-- <active-goals v-if="selectedComponent === 'active-goals'"></active-goals>
+    <manage-goals v-if="selectedComponent === 'manage-goals'"></manage-goals> -->
+    <keep-alive>
+      <component :is="selectedComponent"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 import TheHeader from './components/TheHeader.vue';
-import BadgeList from './components/BadgeList.vue';
-import UserInfo from './components/UserInfo.vue';
-import CourseGoal from './components/CourseGoals.vue';
+// import BadgeList from './components/BadgeList.vue';
+// import UserInfo from './components/UserInfo.vue';
+// import CourseGoal from './components/CourseGoals.vue';
+import ActiveGoals from './components/ActiveGoals.vue';
+import ManageGoals from './components/ManageGoals.vue';
 
 export default {
   components: {
     // 'the-header': TheHeader,
     TheHeader,
-    BadgeList,
-    UserInfo,
-    CourseGoal
+    // BadgeList,
+    // UserInfo,
+    // CourseGoal,
+    ActiveGoals,
+    ManageGoals
   },
   data() {
     return {
+      selectedComponent: 'active-goal',
       activeUser: {
         name: 'Levente Madi',
         description: 'Site owner and admin',
@@ -38,6 +40,11 @@ export default {
       },
     };
   },
+  methods: {
+    setSelectedComponent(cmp) {
+      this.selectedComponent = cmp;
+    } 
+  }
 };
 </script>
 
@@ -50,3 +57,15 @@ body {
   margin: 0;
 }
 </style>
+
+
+    <!-- <BadgeList />
+    <UserInfo
+      :full-name="activeUser.name"
+      :info-text="activeUser.description"
+      :role="activeUser.role"
+    />
+    <course-goal #default="slotProps">
+      <h2>{{ slotProps.item }}</h2>
+      <p>{{ slotProps['another'] }}</p>
+    </course-goal> -->
